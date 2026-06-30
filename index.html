@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croissance Esthétique — Paiement 3 mois</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        :root {
+            --bleu-nuit: #0D1B2A;
+            --ivoire: #F7F5F0;
+            --or-champagne: #C8B181;
+            --beige-mineral: #D8D2C4;
+            --ivoire-deep: #EEEBE4;
+            --or-light: #D4C49E;
+            --bleu-nuit-60: rgba(13, 27, 42, 0.6);
+            --bleu-nuit-30: rgba(13, 27, 42, 0.3);
+            --or-20: rgba(200, 177, 129, 0.2);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 300;
+            color: var(--bleu-nuit);
+            background: var(--ivoire);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 0%, var(--or-20) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, var(--or-20) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 600; line-height: 1.2; }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            min-height: 100vh;
+        }
+        @media (max-width: 850px) {
+            .wrapper {
+                grid-template-columns: 1fr;
+                max-width: 560px;
+                gap: 2rem;
+            }
+        }
+
+        .recap {
+            position: sticky;
+            top: 2rem;
+            animation: fadeUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+        @media (max-width: 850px) {
+            .recap { position: static; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .logo span { color: var(--or-champagne); }
+        .logo-line { width: 40px; height: 1px; background: var(--or-champagne); margin-bottom: 2.5rem; }
+
+        .recap__label {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.68rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--or-champagne);
+            margin-bottom: 0.5rem;
+        }
+        .recap__title { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.6rem; }
+        .recap__desc { font-size: 0.95rem; color: var(--bleu-nuit-60); margin-bottom: 2rem; line-height: 1.6; }
+
+        .recap__price-block {
+            background: var(--bleu-nuit);
+            border-radius: 14px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .recap__price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--or-champagne);
+            line-height: 1;
+        }
+        .recap__price-suffix { font-size: 1rem; font-weight: 400; opacity: 0.6; }
+        .recap__price-note { font-size: 0.8rem; color: rgba(247, 245, 240, 0.5); margin-top: 0.4rem; }
+
+        .recap__features { list-style: none; margin-bottom: 2rem; }
+        .recap__feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .recap__feature svg { width: 17px; height: 17px; fill: var(--or-champagne); flex-shrink: 0; margin-top: 3px; }
+
+        .parrainage {
+            padding: 1.3rem 1.6rem;
+            background: #fff;
+            border: 1px solid var(--beige-mineral);
+            border-radius: 12px;
+        }
+        .parrainage__title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--or-champagne);
+            margin-bottom: 0.3rem;
+        }
+        .parrainage__text { font-size: 0.8rem; color: var(--bleu-nuit-60); line-height: 1.5; }
+        .parrainage__text strong { color: var(--bleu-nuit); font-weight: 600; }
+
+        .checkout-col {
+            animation: fadeUp 0.6s 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+        .checkout-container {
+            background: #fff;
+            border: 1px solid var(--beige-mineral);
+            border-radius: 16px;
+            padding: 2rem;
+            min-height: 450px;
+        }
+        .checkout-container h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--beige-mineral);
+        }
+        #checkout { min-height: 380px; }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 350px;
+            gap: 1rem;
+            color: var(--bleu-nuit-60);
+            font-size: 0.9rem;
+        }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid var(--beige-mineral);
+            border-top-color: var(--or-champagne);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error-msg { text-align: center; padding: 2rem; color: #c0392b; font-size: 0.9rem; }
+
+        .cgv-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 1rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--beige-mineral);
+        }
+        .cgv-consent input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: var(--or-champagne);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .cgv-consent label {
+            font-size: 0.82rem;
+            color: var(--bleu-nuit);
+            cursor: pointer;
+            line-height: 1.5;
+        }
+        .cgv-consent a {
+            color: var(--or-champagne);
+            text-decoration: underline;
+        }
+
+        .secure-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: var(--bleu-nuit-30);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+        }
+        .secure-footer svg { width: 13px; height: 13px; fill: var(--bleu-nuit-30); }
+
+        .success {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        .success__icon {
+            width: 64px; height: 64px;
+            background: var(--or-20);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .success__icon svg { width: 32px; height: 32px; fill: var(--or-champagne); }
+        .success__title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .success__text { font-size: 0.95rem; color: var(--bleu-nuit-60); }
+
+        .page-footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 1rem 1.5rem 2rem;
+            font-size: 0.7rem;
+            color: var(--bleu-nuit-30);
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="recap">
+            <div class="logo">Croissance <span>Esthétique</span></div>
+            <div class="logo-line"></div>
+
+            <div class="recap__label">Programme complet</div>
+            <h1 class="recap__title">Croissance Esthétique — 3 Mois</h1>
+            <p class="recap__desc">90 jours pour transformer durablement l'acquisition de votre institut.</p>
+
+            <div class="recap__price-block">
+                <div class="recap__price">3 900<span class="recap__price-suffix"> EUR</span></div>
+                <div class="recap__price-note">Paiement unique</div>
+            </div>
+
+            <ul class="recap__features">
+                <li class="recap__feature">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    Campagnes Meta Ads optimisées et gérées
+                </li>
+                <li class="recap__feature">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    Opératrice dédiée à la prise de rendez-vous
+                </li>
+                <li class="recap__feature">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    Coaching vente et rétention personnalisé
+                </li>
+                <li class="recap__feature">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    Tunnel de vente personnalisé
+                </li>
+                <li class="recap__feature">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    Garantie contractuelle : 15 nouvelles clientes/mois
+                </li>
+                <li class="recap__feature">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                    Support prioritaire sous 48h
+                </li>
+            </ul>
+
+            <div class="parrainage">
+                <div class="parrainage__title">Parrainez et économisez</div>
+                <p class="parrainage__text">Recommandez Croissance Esthétique à un confrère ou une consoeur et recevez une <strong>réduction sur votre prochaine facture</strong>. Demandez votre code de parrainage à votre conseillère.</p>
+            </div>
+        </div>
+
+        <div class="checkout-col">
+            <div class="checkout-container">
+                <h2 id="checkout-title">Paiement sécurisé</h2>
+                <div class="loading" id="loading-state">
+                    <div class="spinner"></div>
+                    Chargement du formulaire de paiement...
+                </div>
+                <div class="cgv-consent">
+                    <input type="checkbox" id="cgv-checkbox">
+                    <label for="cgv-checkbox">J'accepte les <a href="/cgv" target="_blank">Conditions Générales de Vente</a></label>
+                </div>
+                <div id="checkout" style="display:none"></div>
+                <div id="success-state" class="hidden">
+                    <div class="success">
+                        <div class="success__icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <h3 class="success__title">Paiement confirmé</h3>
+                        <p class="success__text">Merci pour votre confiance. Votre conseillère vous contactera sous 24h pour lancer votre programme.</p>
+                    </div>
+                </div>
+                <div id="error-state" class="hidden">
+                    <div class="error-msg">Une erreur est survenue. Veuillez rafraîchir la page ou contacter votre conseillère.</div>
+                </div>
+            </div>
+            <div class="secure-footer">
+                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                Chiffrement SSL — Paiement sécurisé par Stripe
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">Croissance Esthétique LLC — Cheyenne, WY</div>
+
+    <script>
+        const OFFER = '3mois-1x';
+        const STRIPE_PK = 'pk_live_51ThWxQGu4i28N7WvNAnN3TMrdHVbKycvwxsBxLA2us8lBczfI13hqlOb5TfOR12ZEYNqbj9uMzNQWp1ejGMG2dPy00c0fYYGTC';
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('session_id')) {
+            document.getElementById('checkout').classList.add('hidden');
+            document.getElementById('checkout-title').textContent = 'Merci !';
+            document.getElementById('success-state').classList.remove('hidden');
+        } else {
+            initCheckout();
+        }
+
+        document.getElementById('cgv-checkbox').addEventListener('change', function() {
+            document.getElementById('checkout').style.display = this.checked ? 'block' : 'none';
+        });
+
+        async function initCheckout() {
+            try {
+                const res = await fetch('/api/create-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ offer: OFFER }),
+                });
+
+                if (!res.ok) throw new Error('Erreur serveur');
+
+                const { clientSecret } = await res.json();
+                const stripe = Stripe(STRIPE_PK);
+                const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+
+                document.getElementById('loading-state').classList.add('hidden');
+                checkout.mount('#checkout');
+            } catch (err) {
+                document.getElementById('loading-state').classList.add('hidden');
+                var errDiv = document.getElementById('error-state');
+                errDiv.classList.remove('hidden');
+                errDiv.querySelector('.error-msg').textContent = 'Erreur: ' + (err.message || err);
+                console.error('Checkout error:', err);
+            }
+        }
+    </script>
+</body>
+</html>
