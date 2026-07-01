@@ -51,7 +51,7 @@ async function updateAirtable(email) {
     },
     body: JSON.stringify({
       fields: {
-        [paymentField]: true,
+        [paymentField]: 'Oui',
       },
     }),
   });
