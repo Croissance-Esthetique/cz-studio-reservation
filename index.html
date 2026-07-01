@@ -340,8 +340,8 @@
     <div class="page-footer">Croissance Esthétique LLC — Cheyenne, WY</div>
 
     <script>
-        const OFFER = '3mois-1x';
-        const STRIPE_PK = 'pk_live_51ThWxQGu4i28N7WvNAnN3TMrdHVbKycvwxsBxLA2us8lBczfI13hqlOb5TfOR12ZEYNqbj9uMzNQWp1ejGMG2dPy00c0fYYGTC';
+        const OFFER = 'Réservation Offre Découverte Cryolipolyse';
+        const STRIPE_PK = 'pk_live_51QdUhDCQs0vPlG55KDCPKRRSKLTRfhojB2rh56BgzWwwMrHEHn3sDNb34KAVIk6y04VeQLGmXCgFiMEa479ZRSlM00vuq0z8UO';
 
         const params = new URLSearchParams(window.location.search);
         if (params.get('session_id')) {
@@ -358,7 +358,7 @@
 
         async function initCheckout() {
             try {
-                const res = await fetch('/api/create-session', {
+                const res = await fetch('/api/create-checkout-session', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ offer: OFFER }),
