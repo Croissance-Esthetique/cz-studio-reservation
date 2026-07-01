@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merci - CZ Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #050505;
+            --white: #ffffff;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .brand {
+            width: 160px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .brand img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .check {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.75rem;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.64);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.72);
+            font-weight: 300;
+            font-size: 1.05rem;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .note {
+            margin-top: 2rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.64);
+            font-size: 0.86rem;
+            text-align: left;
+        }
+
+        .note strong {
+            color: var(--white);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="brand">
+            <img src="logo-blanc.jpg" alt="CZ Studio">
+        </div>
+
+        <div class="check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M4 12.5L9.5 18L20 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <p class="eyebrow">Reservation confirmee</p>
+        <h1>Merci, votre acompte a bien ete recu</h1>
+        <p>
+            Votre place pour l'offre cryolipolyse CZ Studio est reservee. L'equipe vous contactera prochainement pour finaliser les details de votre rendez-vous.
+        </p>
+
+        <div class="note">
+            <strong>Un recu de paiement</strong> vous a ete envoye par email par Stripe. Pour toute question, contactez directement l'equipe CZ Studio.
+        </div>
+    </div>
+</body>
+</html>
