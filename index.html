@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZ Studio - Reservation cryolipolyse</title>
+    <title>CZ Studio - Réservation cryolipolyse</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -112,6 +112,39 @@
             font-size: clamp(1rem, 1.5vw, 1.18rem);
             font-weight: 300;
             color: rgba(255, 255, 255, 0.72);
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            max-width: 570px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            font-size: clamp(1rem, 1.4vw, 1.1rem);
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .benefits-list__check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--black);
+            font-size: 0.7rem;
+            line-height: 1;
+            margin-top: 0.15rem;
         }
 
         .trust-block {
@@ -252,21 +285,24 @@
             </div>
 
             <div class="summary__content">
-                <p class="eyebrow">Reservation securisee</p>
+                <p class="eyebrow">Réservation sécurisée</p>
                 <h1 id="page-title">Offre cryolipolyse CZ Studio</h1>
                 <p class="summary__text">
-                    Validez votre acompte de 30 EUR pour reserver votre place chez CZ Studio et profiter de l'offre cryolipolyse a prix reduit.
+                    Validez votre acompte de 30 EUR pour réserver votre place chez CZ Studio et profiter de l'offre cryolipolyse à prix réduit.
                 </p>
 
+                <ul class="benefits-list">
+                    <li><span class="benefits-list__check" aria-hidden="true">&#10003;</span> Une solution pour les graisses résistantes</li>
+                    <li><span class="benefits-list__check" aria-hidden="true">&#10003;</span> Un traitement non invasif et sans contrainte</li>
+                    <li><span class="benefits-list__check" aria-hidden="true">&#10003;</span> Une peau plus ferme, des contours plus nets</li>
+                </ul>
+
                 <div class="trust-block" aria-label="Avis Google">
-                    <p class="trust-block__name">CZ Studio - Epilation Definitive et Soins Esthetiques - Mons</p>
+                    <p class="trust-block__name">CZ Studio - Épilation Définitive et Soins Esthétiques - Mons</p>
                     <div class="trust-block__rating">
-                        <span class="trust-block__stars" aria-hidden="true">*****</span>
-                        <strong>5,0/5 sur Google</strong>
+                        <span class="trust-block__stars" aria-hidden="true">★★★★★</span>
+                        <strong>5/5 sur Google sur +180 avis</strong>
                     </div>
-                    <p class="trust-block__text">
-                        Plus de 180 avis clients. Un centre technico-esthetique reconnu a Mons, avec une reservation claire, un paiement securise et une prise en charge par l'equipe du cabinet.
-                    </p>
                 </div>
             </div>
         </section>
@@ -274,17 +310,17 @@
         <section class="checkout" aria-label="Paiement de reservation">
             <div class="panel">
                 <div class="payment-head">
-                    <h2>Finalisez votre reservation en toute confiance</h2>
+                    <h2>Finalisez votre réservation en toute confiance</h2>
                 </div>
 
                 <!-- Zone d'accueil du formulaire Stripe -->
                 <div id="checkout">
-                    <p id="checkout-loading">Chargement du paiement securise...</p>
+                    <p id="checkout-loading">Chargement du paiement sécurisé...</p>
                 </div>
                 <div id="checkout-error"></div>
 
                 <div class="note">
-                    <strong>Important :</strong> la cryolipolyse est un soin technico-esthetique. L'equipe CZ Studio vous accompagne pour verifier que l'offre correspond bien a votre besoin avant le rendez-vous.
+                    <strong>Important :</strong> la cryolipolyse est un soin technico-esthétique. L'équipe CZ Studio vous accompagne pour vérifier que l'offre correspond bien à votre besoin avant le rendez-vous.
                 </div>
             </div>
         </section>
